@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use App\Http\Resources\ContactCollection;
+use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 
 class ContactController extends Controller
@@ -15,7 +17,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::paginate(20);
+        return  ContactResource::collection($contacts);
     }
 
     /**
@@ -36,7 +39,16 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        //
+        $contact = new Contact();
+        $contact->name = $request->name;
+        $contact->surname = $request->surname;
+        $contact->company = $request->company;
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('/images/1/smalls');
+            $contact->photo = $path;
+        }
+        $contact->save();
+        return response()->json($contact);
     }
 
     /**
@@ -47,7 +59,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        return new ContactResource($contact);
     }
 
     /**
@@ -70,7 +82,14 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
-        //
+        $contact->name = $request->name;
+        $contact->surname = $request->surname;
+        $contact->company = $request->company;
+        $contact->photo = $request->photo;
+        $contact->save();
+        return response()->json([
+
+        ]);
     }
 
     /**
@@ -81,6 +100,6 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+
     }
 }

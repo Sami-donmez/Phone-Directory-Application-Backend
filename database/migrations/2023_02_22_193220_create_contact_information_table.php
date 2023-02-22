@@ -14,10 +14,11 @@ class CreateContactInformationTable extends Migration
     public function up()
     {
         Schema::create('contact_information', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->unique();
             $table->string('type');
             $table->string('name');
             $table->string('value');
+            $table->foreignUuid('contact_id')->constrained('contacts');
             $table->timestamps();
         });
     }

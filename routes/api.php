@@ -18,14 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('heartbeat',[]);
-Route::post('contact',[]);
+Route::get('contacts',[\App\Http\Controllers\ContactController::class,'index']);
+Route::get('contacts/{contact}',[\App\Http\Controllers\ContactController::class,'show']);
+Route::post('contacts',[\App\Http\Controllers\ContactController::class,'store']);
 //Soft delete
-Route::delete('contact/{contact}',[]);
+Route::delete('contacts/{contact}',[\App\Http\Controllers\ContactController::class,'delete']);
 //Hard delete reference=https://medium.com/biodati/rest-api-deletion-pattern-4eb8b0dafbce
-Route::delete('contact/purge/{contact}',[]);
-Route::put('contact/{contact}',[]);
-Route::get('contacts',[]);
-Route::get('heartbeat',[]);
-Route::get('heartbeat',[]);
-Route::get('heartbeat',[]);
+Route::delete('contacts/purge/{contact}',[\App\Http\Controllers\ContactController::class,'destroy']);
+Route::put('contacts/{contact}',[\App\Http\Controllers\ContactController::class,'update']);
