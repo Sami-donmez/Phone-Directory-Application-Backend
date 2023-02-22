@@ -100,6 +100,26 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-
+        if ($contact->delete()) {
+            return response()->json([
+                'message'=>'Contacts deleted'
+            ]);
+        }else{
+            return response()->json([
+                'message'=>'Contacts not deleted'
+            ]);
+        }
+    }
+    public function delete(Contact $contact)
+    {
+        if ($contact->forceDelete()) {
+            return response()->json([
+                'message'=>'Contacts force deleted'
+            ]);
+        }else{
+            return response()->json([
+                'message'=>'Contacts not force deleted'
+            ]);
+        }
     }
 }

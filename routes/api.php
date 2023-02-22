@@ -26,3 +26,7 @@ Route::delete('contacts/{contact}',[\App\Http\Controllers\ContactController::cla
 //Hard delete reference=https://medium.com/biodati/rest-api-deletion-pattern-4eb8b0dafbce
 Route::delete('contacts/purge/{contact}',[\App\Http\Controllers\ContactController::class,'destroy']);
 Route::put('contacts/{contact}',[\App\Http\Controllers\ContactController::class,'update']);
+Route::post('contacts/{contact}/informations',[\App\Http\Controllers\ContactInformationController::class,'store']);
+Route::post('contacts-informations',[\App\Http\Controllers\ContactInformationController::class,'store']);
+Route::delete('contacts-informations/{contactInformation}',[\App\Http\Controllers\ContactInformationController::class,'destroy']);
+Route::delete('contacts/statistic',[\App\Http\Controllers\ContactInformationController::class,'destroy']);
